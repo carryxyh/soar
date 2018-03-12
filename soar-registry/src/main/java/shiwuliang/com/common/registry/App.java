@@ -1,4 +1,4 @@
-package shiwuliang.com;
+package shiwuliang.com.common.registry;
 
 /**
  * Hello world!
