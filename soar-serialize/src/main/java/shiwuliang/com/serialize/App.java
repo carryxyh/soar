@@ -1,4 +1,4 @@
-package shiwuliang.com.common.registry;
+package shiwuliang.com.serialize;
 
 /**
  * Hello world!

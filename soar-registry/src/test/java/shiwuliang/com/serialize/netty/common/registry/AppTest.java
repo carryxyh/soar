@@ -1,4 +1,4 @@
-package shiwuliang.com.common;
+package shiwuliang.com.serialize.netty.common.registry;
 
 import junit.framework.Test;
 import junit.framework.TestCase;

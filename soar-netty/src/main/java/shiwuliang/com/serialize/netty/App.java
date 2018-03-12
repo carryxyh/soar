@@ -1,4 +1,4 @@
-package shiwuliang.com.common;
+package shiwuliang.com.serialize.netty;
 
 /**
  * Hello world!
