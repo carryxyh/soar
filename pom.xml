@@ -77,7 +77,7 @@
         <dependency>
             <groupId>com.esotericsoftware</groupId>
             <artifactId>kryo</artifactId>
-            <version>3.0.3</version>
+            <version>4.0.1</version>
         </dependency>
 
         <!-- hessian -->
@@ -109,7 +109,7 @@
         <!-- plugin -->
         <dependency>
             <groupId>org.pf4j</groupId>
-            <artifactId>pf4j-parent</artifactId>
+            <artifactId>pf4j</artifactId>
             <version>2.2.0</version>
         </dependency>
     </dependencies>
