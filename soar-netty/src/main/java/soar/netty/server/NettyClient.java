@@ -37,11 +37,12 @@ public class NettyClient implements Server {
                 .option(ChannelOption.SO_KEEPALIVE, Boolean.TRUE)
                 .option(ChannelOption.TCP_NODELAY, Boolean.TRUE)
                 .option(ChannelOption.ALLOCATOR, PooledByteBufAllocator.DEFAULT)
+                .option(ChannelOption.CONNECT_TIMEOUT_MILLIS, 3000)
                 .channel(NioSocketChannel.class);
 //        if (config.getTimeout() < 3000) {
 //            bootstrap.option(ChannelOption.CONNECT_TIMEOUT_MILLIS, 3000);
 //        } else {
-//            bootstrap.option(ChannelOption.CONNECT_TIMEOUT_MILLIS, config.getTimeout());
+
 //        }
 
         bootstrap.handler(new ChannelInitializer() {
@@ -54,16 +55,18 @@ public class NettyClient implements Server {
     }
 
     public void doClose() {
-
+        if (eventLoopGroup != null) {
+            eventLoopGroup.shutdownGracefully();
+        }
     }
 
     @Override
     public void open() {
-
+        doOpen();
     }
 
     @Override
     public void close() {
-
+        doClose();
     }
 }

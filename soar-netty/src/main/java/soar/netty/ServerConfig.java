@@ -32,23 +32,13 @@ public final class ServerConfig {
      */
     private int coreSize = 30;
 
-    /**
-     * timeout
-     */
-    private int timeout = 3000;
+    private ServerConfig() {
+    }
 
     public static ServerConfig getInstance(int port) {
         ServerConfig config = new ServerConfig();
         config.setPort(port);
         return config;
-    }
-
-    public int getTimeout() {
-        return timeout;
-    }
-
-    public void setTimeout(int timeout) {
-        this.timeout = timeout;
     }
 
     public int getPort() {

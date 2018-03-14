@@ -47,10 +47,13 @@ public class NettyServer implements Server {
         this.serverConfig = serverConfig;
     }
 
-    public void doOpen(ServerConfig config) {
+    public void doOpen() {
+
+        //TODO init executor
+
         serverBootstrap = new ServerBootstrap();
-        bossGroup = new NioEventLoopGroup(2, new DefaultThreadFactory("soar-server-boss", true));
-        workerGroup = new NioEventLoopGroup(Runtime.getRuntime().availableProcessors() * 2 + 1,
+        bossGroup = new NioEventLoopGroup(serverConfig.getBossThreads(), new DefaultThreadFactory("soar-server-boss", true));
+        workerGroup = new NioEventLoopGroup(serverConfig.getWorkerThreads(),
                 new DefaultThreadFactory("soar-server-worker", true));
         serverBootstrap.group(bossGroup, workerGroup)
                 .channel(NioServerSocketChannel.class)
@@ -65,7 +68,7 @@ public class NettyServer implements Server {
                 });
 
         // bind
-        ChannelFuture channelFuture = serverBootstrap.bind(config.getPort());
+        ChannelFuture channelFuture = serverBootstrap.bind(serverConfig.getPort());
         channelFuture.syncUninterruptibly();
         channel = channelFuture.channel();
     }
@@ -81,6 +84,12 @@ public class NettyServer implements Server {
 
     @Override
     public void close() {
-
+        if (channel != null) {
+            channel.close();
+        }
+        if (serverBootstrap != null) {
+            bossGroup.shutdownGracefully();
+            workerGroup.shutdownGracefully();
+        }
     }
 }
