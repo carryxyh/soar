@@ -38,7 +38,15 @@ public class NettyServer implements Server {
      */
     private EventLoopGroup workerGroup;
 
-    @Override
+    /**
+     * server config
+     */
+    private ServerConfig serverConfig;
+
+    public NettyServer(ServerConfig serverConfig) {
+        this.serverConfig = serverConfig;
+    }
+
     public void doOpen(ServerConfig config) {
         serverBootstrap = new ServerBootstrap();
         bossGroup = new NioEventLoopGroup(2, new DefaultThreadFactory("soar-server-boss", true));
@@ -62,8 +70,17 @@ public class NettyServer implements Server {
         channel = channelFuture.channel();
     }
 
-    @Override
     public void doClose() {
+
+    }
+
+    @Override
+    public void open() {
+
+    }
+
+    @Override
+    public void close() {
 
     }
 }

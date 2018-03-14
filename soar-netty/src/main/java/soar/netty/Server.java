@@ -10,13 +10,11 @@ public interface Server {
 
     /**
      * open server
-     *
-     * @param config server config
      */
-    void doOpen(ServerConfig config);
+    void open();
 
     /**
      * close server
      */
-    void doClose();
+    void close();
 }
