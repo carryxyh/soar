@@ -1,6 +1,7 @@
 package soar.netty.server;
 
 import soar.netty.Server;
+import soar.netty.ServerConfig;
 
 /**
  * NettyClient
@@ -10,10 +11,12 @@ import soar.netty.Server;
  */
 public class NettyClient implements Server {
 
-    public void doOpen(Server config) {
+    @Override
+    public void doOpen(ServerConfig config) {
 
     }
 
+    @Override
     public void doClose() {
 
     }

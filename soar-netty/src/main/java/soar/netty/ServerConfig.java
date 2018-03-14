@@ -32,8 +32,6 @@ public final class ServerConfig {
      */
     private int coreSize = 30;
 
-    private int maxFrameLength = 4 * 1024 * 1024;
-
     public static ServerConfig getInstance(int port) {
         ServerConfig config = new ServerConfig();
         config.setPort(port);
@@ -78,13 +76,5 @@ public final class ServerConfig {
 
     public void setCoreSize(int coreSize) {
         this.coreSize = coreSize;
-    }
-
-    public int getMaxFrameLength() {
-        return maxFrameLength;
-    }
-
-    public void setMaxFrameLength(int maxFrameLength) {
-        this.maxFrameLength = maxFrameLength;
     }
 }
