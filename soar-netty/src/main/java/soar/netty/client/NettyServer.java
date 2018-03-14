@@ -13,7 +13,7 @@ import soar.netty.ServerConfig;
 /**
  * NettyServer
  *
- * @author 修宇航 [xiuyuhang]
+ * @author xiuyuhang [xiuyuhang]
  * @since 2018-03-14
  */
 public class NettyServer implements Server {

@@ -14,5 +14,10 @@
     <name>soar-core</name>
 
     <dependencies>
+        <dependency>
+            <groupId>shiwuliang.com</groupId>
+            <artifactId>soar-common</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
+        </dependency>
     </dependencies>
 </project>
