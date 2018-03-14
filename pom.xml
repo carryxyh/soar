@@ -16,6 +16,7 @@
         <module>soar-netty</module>
         <module>soar-serialize</module>
     <module>soar-core</module>
+    <module>soar-cluster</module>
   </modules>
 
     <dependencies>
