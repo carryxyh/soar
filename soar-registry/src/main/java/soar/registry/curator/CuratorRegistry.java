@@ -4,6 +4,8 @@ import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.CuratorFrameworkFactory;
 import org.apache.curator.retry.RetryNTimes;
 import org.apache.log4j.Logger;
+import org.apache.zookeeper.CreateMode;
+import org.apache.zookeeper.KeeperException;
 import soar.registry.Registry;
 
 /**
@@ -39,7 +41,11 @@ public class CuratorRegistry implements Registry {
 
     @Override
     public void registry(String path) {
-
+        try {
+            client.create().withMode(CreateMode.EPHEMERAL).forPath(path);
+        } catch (Exception e) {
+            throw new IllegalStateException(e.getMessage(), e);
+        }
     }
 
     @Override
