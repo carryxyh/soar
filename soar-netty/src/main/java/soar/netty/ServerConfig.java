@@ -2,6 +2,9 @@ package soar.netty;
 
 /**
  * ServerConfig
+ * 隔离方式：
+ * tag -> room
+ * 同tag下的所有服务直接连接，出问题后同机房容错，机房错误率高之后切换
  *
  * @author xiuyuhang
  */
@@ -31,6 +34,16 @@ public final class ServerConfig {
      * handler core size
      */
     private int coreSize = 30;
+
+    /**
+     * 机房信息
+     */
+    private String room = System.getProperty("soar.room", "");
+
+    /**
+     * tag信息 环境软隔离
+     */
+    private String tag = System.getProperty("soar.tag", "");
 
     private ServerConfig() {
     }
@@ -79,5 +92,21 @@ public final class ServerConfig {
 
     public void setCoreSize(int coreSize) {
         this.coreSize = coreSize;
+    }
+
+    public String getRoom() {
+        return room;
+    }
+
+    public void setRoom(String room) {
+        this.room = room;
+    }
+
+    public String getTag() {
+        return tag;
+    }
+
+    public void setTag(String tag) {
+        this.tag = tag;
     }
 }
