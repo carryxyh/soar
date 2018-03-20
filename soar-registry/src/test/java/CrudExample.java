@@ -1,15 +1,42 @@
-import java.util.List;
-
 import org.apache.curator.framework.CuratorFramework;
+import org.apache.curator.framework.CuratorFrameworkFactory;
 import org.apache.curator.framework.api.BackgroundCallback;
 import org.apache.curator.framework.api.CuratorEvent;
 import org.apache.curator.framework.api.CuratorListener;
+import org.apache.curator.framework.api.CuratorWatcher;
+import org.apache.curator.retry.RetryNTimes;
 import org.apache.zookeeper.CreateMode;
+import org.apache.zookeeper.WatchedEvent;
 import org.apache.zookeeper.Watcher;
+
+import java.util.List;
 
 public class CrudExample {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
+        String digest = "1xife@F1FXX";
+        CuratorFramework client;
+        CuratorFrameworkFactory.Builder builder = CuratorFrameworkFactory.builder()
+                .connectString("10.165.124.48:2181,10.165.124.50:2181,10.165.124.51:2181")
+                .retryPolicy(new RetryNTimes(1, 1000))
+                .connectionTimeoutMs(5000);
+        try {
+            if (digest != null) {
+                builder.authorization("digest", digest.getBytes("utf-8"));
+            }
+            client = builder.build();
+        } catch (Exception e) {
+            throw new IllegalStateException(e.getMessage());
+        }
+        client.start();
+        CuratorWatcher curatorWatcher = new CuratorWatcher() {
+            @Override
+            public void process(WatchedEvent event) throws Exception {
+
+            }
+        };
+        createEphemeral(client, "soar/rpc/providers", "com.soar.UserService".getBytes("utf-8"));
+
     }
 
     public static void create(CuratorFramework client, String path, byte[] payload) throws Exception {
@@ -39,6 +66,7 @@ public class CrudExample {
             @Override
             public void eventReceived(CuratorFramework client, CuratorEvent event) throws Exception {
                 // examine event for details
+
             }
         };
         client.getCuratorListenable().addListener(listener);
