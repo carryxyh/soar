@@ -37,14 +37,23 @@ public class PathChildrenCacheExample {
             }
         });
 
-//        client.delete().guaranteed().forPath(parentPath);
+        //checkExists 如果返回数据 说明节点存在  为null则不存在
+        if (client.checkExists().forPath(parentPath) == null) {
+            client.create().forPath(parentPath);
+        }
+
+        //guaranteed保证节点被删除
+        client.delete().guaranteed().forPath(parentPath);
+
+//        Thread.sleep(1000);
 //
-        //过一会会自动断掉
+//        //过一会会自动断掉 会删除这个子节点
         client.create().withMode(CreateMode.EPHEMERAL).forPath(path);
-        Thread.sleep(1000); // 此处需留意，如果没有现成睡眠则无法触发监听事件  主要应该是因为是异步的原因
+//        Thread.sleep(1000); // 此处需留意，如果没有现成睡眠则无法触发监听事件  主要应该是因为是异步的原因
 //        client.delete().forPath(path);
+        //节点设置数据同样会触发监听器
         client.setData().forPath(path, "test data".getBytes("utf-8"));
-        Thread.sleep(1000);
+        Thread.sleep(2000);
     }
 
     private static CuratorFramework getClient() throws UnsupportedEncodingException {
