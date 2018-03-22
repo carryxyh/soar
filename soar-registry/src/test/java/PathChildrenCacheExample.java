@@ -17,6 +17,8 @@ import java.io.UnsupportedEncodingException;
  * （2）只能监听指定节点下一级节点的变化，比如说指定节点”/example”, 在下面添加”node1”可以监听到，但是添加”node1/n1”就不能被监听到了
  * （3）可以监听到的事件：节点创建、节点数据的变化、节点删除等
  *
+ * 监听指定节点的子节点的变更包括添加，删除，子节点数据数据变更这三类。
+ *
  * @author xiuyuhang [xiuyuhang]
  * @since 2018-03-20
  */
