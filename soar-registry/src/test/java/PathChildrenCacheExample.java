@@ -2,6 +2,8 @@ import org.apache.curator.RetryPolicy;
 import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.CuratorFrameworkFactory;
 import org.apache.curator.framework.recipes.cache.PathChildrenCache;
+import org.apache.curator.framework.recipes.cache.PathChildrenCacheEvent;
+import org.apache.curator.framework.recipes.cache.PathChildrenCacheListener;
 import org.apache.curator.retry.ExponentialBackoffRetry;
 import org.apache.zookeeper.CreateMode;
 
@@ -27,15 +29,22 @@ public class PathChildrenCacheExample {
 
         PathChildrenCache pathChildrenCache = new PathChildrenCache(client, parentPath, true);
         pathChildrenCache.start(PathChildrenCache.StartMode.POST_INITIALIZED_EVENT);
-        pathChildrenCache.getListenable().addListener((client1, event) -> System.out.println("事件类型：" + event.getType() + "；操作节点：" + event.getData().getPath()));
+        pathChildrenCache.getListenable().addListener(new PathChildrenCacheListener() {
+            @Override
+            public void childEvent(CuratorFramework client, PathChildrenCacheEvent event) throws Exception {
+                System.out.println("事件类型：" + event.getType() + "；操作节点：" + event.getData().getPath());
+                System.out.println(new String(event.getData().getData()));
+            }
+        });
 
 //        client.delete().guaranteed().forPath(parentPath);
 //
         //过一会会自动断掉
         client.create().withMode(CreateMode.EPHEMERAL).forPath(path);
-        Thread.sleep(1000); // 此处需留意，如果没有现成睡眠则无法触发监听事件
+        Thread.sleep(1000); // 此处需留意，如果没有现成睡眠则无法触发监听事件  主要应该是因为是异步的原因
 //        client.delete().forPath(path);
-
+        client.setData().forPath(path, "test data".getBytes("utf-8"));
+        Thread.sleep(1000);
     }
 
     private static CuratorFramework getClient() throws UnsupportedEncodingException {
