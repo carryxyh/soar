@@ -10,7 +10,7 @@
     </parent>
 
     <artifactId>soar-serialize</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>${soar.common.version}</version>
 
     <name>soar-serialize</name>
 </project>

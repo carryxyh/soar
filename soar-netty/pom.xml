@@ -9,7 +9,7 @@
         <version>1.0.0-SNAPSHOT</version>
     </parent>
     <artifactId>soar-netty</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>${soar.common.version}</version>
 
     <name>soar-netty</name>
 
