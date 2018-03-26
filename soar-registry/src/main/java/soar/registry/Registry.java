@@ -21,4 +21,12 @@ public interface Registry {
      * @param path the path
      */
     void unRegistry(String path);
+
+    /**
+     * subscribe a path
+     *
+     * @param path     path
+     * @param listener listener
+     */
+    void subscribe(String path, RegistryListener listener);
 }

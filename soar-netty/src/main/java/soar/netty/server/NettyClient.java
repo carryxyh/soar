@@ -8,7 +8,11 @@ import io.netty.channel.ChannelOption;
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioSocketChannel;
-import soar.netty.Server;
+import soar.netty.Client;
+import soar.netty.ClientConfig;
+
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * NettyClient
@@ -16,7 +20,17 @@ import soar.netty.Server;
  * @author xiuyuhang [xiuyuhang]
  * @since 2018-03-14
  */
-public class NettyClient implements Server {
+public class NettyClient implements Client {
+
+    /**
+     * connect lock
+     */
+    private final Lock connectLock = new ReentrantLock();
+
+    /**
+     * closed
+     */
+    private volatile boolean closed;
 
     /**
      * client bootstrap
@@ -28,6 +42,14 @@ public class NettyClient implements Server {
      */
     private EventLoopGroup eventLoopGroup;
 
+    private volatile Channel channel;
+
+    private ClientConfig clientConfig;
+
+    public NettyClient(ClientConfig clientConfig) {
+        this.clientConfig = clientConfig;
+    }
+
     public void doOpen() {
 
         eventLoopGroup = new NioEventLoopGroup(Runtime.getRuntime().availableProcessors());
@@ -37,7 +59,7 @@ public class NettyClient implements Server {
                 .option(ChannelOption.SO_KEEPALIVE, Boolean.TRUE)
                 .option(ChannelOption.TCP_NODELAY, Boolean.TRUE)
                 .option(ChannelOption.ALLOCATOR, PooledByteBufAllocator.DEFAULT)
-                .option(ChannelOption.CONNECT_TIMEOUT_MILLIS, 3000)
+                .option(ChannelOption.CONNECT_TIMEOUT_MILLIS, clientConfig.getTimeout())
                 .channel(NioSocketChannel.class);
 //        if (config.getTimeout() < 3000) {
 //            bootstrap.option(ChannelOption.CONNECT_TIMEOUT_MILLIS, 3000);
@@ -68,5 +90,30 @@ public class NettyClient implements Server {
     @Override
     public void close() {
         doClose();
+    }
+
+    @Override
+    public void reconnect() {
+
+    }
+
+    @Override
+    public void disconnect() {
+
+    }
+
+    @Override
+    public void connect() {
+
+    }
+
+    @Override
+    public void send(Object message) {
+
+    }
+
+    @Override
+    public boolean isConnect() {
+        return !closed && channel.isActive();
     }
 }

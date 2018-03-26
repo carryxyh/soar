@@ -8,105 +8,94 @@ package soar.netty;
  *
  * @author xiuyuhang
  */
-public final class ServerConfig {
+public final class ServerConfig extends AbstractConfig {
 
     /**
      * port
      */
-    private int port = 9988;
+    private Integer port = 9988;
 
     /**
      * server boss threads
      */
-    private int bossThreads = 2;
+    private Integer bossThreads = 2;
 
     /**
      * server worker threads
      */
-    private int workerThreads = Runtime.getRuntime().availableProcessors() * 2 + 1;
+    private Integer workerThreads = Runtime.getRuntime().availableProcessors() * 2 + 1;
 
     /**
      * max threads
      */
-    private int maxThreads = 100;
+    private Integer maxThreads = 100;
 
     /**
      * handler core size
      */
-    private int coreSize = 30;
+    private Integer coreSize = 30;
+
 
     /**
-     * 机房信息
+     * use enhanced thread pool
+     * if false use fixed thread pool
      */
-    private String room = System.getProperty("soar.room", "");
-
-    /**
-     * tag信息 环境软隔离
-     */
-    private String tag = System.getProperty("soar.tag", "");
+    private Boolean useEnhancedPool = true;
 
     private ServerConfig() {
     }
 
-    public static ServerConfig getInstance(int port) {
+    public static ServerConfig getInstance(Integer port) {
         ServerConfig config = new ServerConfig();
         config.setPort(port);
         return config;
     }
 
-    public int getPort() {
+    public Integer getPort() {
         return port;
     }
 
-    public void setPort(int port) {
+    public void setPort(Integer port) {
         this.port = port;
     }
 
-    public int getBossThreads() {
+    public Integer getBossThreads() {
         return bossThreads;
     }
 
-    public void setBossThreads(int bossThreads) {
+    public void setBossThreads(Integer bossThreads) {
         this.bossThreads = bossThreads;
     }
 
-    public int getWorkerThreads() {
+    public Integer getWorkerThreads() {
         return workerThreads;
     }
 
-    public void setWorkerThreads(int workerThreads) {
+    public void setWorkerThreads(Integer workerThreads) {
         this.workerThreads = workerThreads;
     }
 
-    public int getMaxThreads() {
+    public Integer getMaxThreads() {
         return maxThreads;
     }
 
-    public void setMaxThreads(int maxThreads) {
+    public void setMaxThreads(Integer maxThreads) {
         this.maxThreads = maxThreads;
     }
 
-    public int getCoreSize() {
+    public Integer getCoreSize() {
         return coreSize;
     }
 
-    public void setCoreSize(int coreSize) {
+    public void setCoreSize(Integer coreSize) {
         this.coreSize = coreSize;
     }
 
-    public String getRoom() {
-        return room;
+    public Boolean isUseEnhancedPool() {
+        return useEnhancedPool;
     }
 
-    public void setRoom(String room) {
-        this.room = room;
-    }
-
-    public String getTag() {
-        return tag;
-    }
-
-    public void setTag(String tag) {
-        this.tag = tag;
+    public void setUseEnhancedPool(Boolean useEnhancedPool) {
+        this.useEnhancedPool = useEnhancedPool;
     }
 }
