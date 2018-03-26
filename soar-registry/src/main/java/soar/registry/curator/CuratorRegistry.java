@@ -7,6 +7,7 @@ import org.apache.log4j.Logger;
 import org.apache.zookeeper.CreateMode;
 import org.apache.zookeeper.KeeperException;
 import soar.registry.Registry;
+import soar.registry.RegistryListener;
 
 /**
  * CuratorRegistry
@@ -50,6 +51,11 @@ public class CuratorRegistry implements Registry {
 
     @Override
     public void unRegistry(String path) {
+
+    }
+
+    @Override
+    public void subscribe(String path, RegistryListener listener) {
 
     }
 }

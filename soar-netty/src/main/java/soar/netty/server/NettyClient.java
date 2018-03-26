@@ -8,7 +8,6 @@ import io.netty.channel.ChannelOption;
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioSocketChannel;
-import soar.netty.Client;
 import soar.netty.ClientConfig;
 
 import java.util.concurrent.locks.Lock;
@@ -20,7 +19,7 @@ import java.util.concurrent.locks.ReentrantLock;
  * @author xiuyuhang [xiuyuhang]
  * @since 2018-03-14
  */
-public class NettyClient implements Client {
+public class NettyClient extends AbstractNettyClient {
 
     /**
      * connect lock
@@ -82,15 +81,7 @@ public class NettyClient implements Client {
         }
     }
 
-    @Override
-    public void open() {
-        doOpen();
-    }
 
-    @Override
-    public void close() {
-        doClose();
-    }
 
     @Override
     public void reconnect() {
@@ -104,7 +95,7 @@ public class NettyClient implements Client {
 
     @Override
     public void connect() {
-
+        
     }
 
     @Override
