@@ -1,5 +1,7 @@
 package soar.cluster;
 
+import soar.core.Invoker;
+
 /**
  * Cluster
  *
@@ -7,4 +9,13 @@ package soar.cluster;
  * @since 2018-03-14
  */
 public interface Cluster {
+
+    /**
+     * construct a cluster invoker
+     *
+     * @param aggregator the aggregator
+     * @param <T>        service
+     * @return the cluster invoker
+     */
+    <T> Invoker<T> construct(Aggregator<T> aggregator);
 }

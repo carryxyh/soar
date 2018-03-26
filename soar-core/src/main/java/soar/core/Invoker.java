@@ -8,7 +8,7 @@ import soar.common.SoarException;
  * @author xiuyuhang [xiuyuhang]
  * @since 2018-03-14
  */
-public interface Invoker {
+public interface Invoker<T> {
 
     /**
      * invoke a remote request
