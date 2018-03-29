@@ -1,4 +1,4 @@
-package soar.netty;
+package soar.common;
 
 /**
  * Server

@@ -1,6 +1,10 @@
 package soar.netty.server;
 
-import soar.netty.Client;
+import soar.common.Client;
+import soar.netty.ClientConfig;
+
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * AbstractNettyClient
@@ -9,6 +13,22 @@ import soar.netty.Client;
  * @since 2018-03-26
  */
 public abstract class AbstractNettyClient implements Client {
+
+    /**
+     * connect lock
+     */
+    private final Lock connectLock = new ReentrantLock();
+
+    /**
+     * closed
+     */
+    protected volatile boolean closed;
+
+    protected final ClientConfig clientConfig;
+
+    protected AbstractNettyClient(ClientConfig clientConfig) {
+        this.clientConfig = clientConfig;
+    }
 
     @Override
     public void open() {

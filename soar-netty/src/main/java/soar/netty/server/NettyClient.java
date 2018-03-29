@@ -10,9 +10,6 @@ import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import soar.netty.ClientConfig;
 
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
-
 /**
  * NettyClient
  *
@@ -20,16 +17,6 @@ import java.util.concurrent.locks.ReentrantLock;
  * @since 2018-03-14
  */
 public class NettyClient extends AbstractNettyClient {
-
-    /**
-     * connect lock
-     */
-    private final Lock connectLock = new ReentrantLock();
-
-    /**
-     * closed
-     */
-    private volatile boolean closed;
 
     /**
      * client bootstrap
@@ -43,10 +30,8 @@ public class NettyClient extends AbstractNettyClient {
 
     private volatile Channel channel;
 
-    private ClientConfig clientConfig;
-
     public NettyClient(ClientConfig clientConfig) {
-        this.clientConfig = clientConfig;
+        super(clientConfig);
     }
 
     public void doOpen() {
@@ -76,12 +61,13 @@ public class NettyClient extends AbstractNettyClient {
     }
 
     public void doClose() {
+        if (closed) {
+            return;
+        }
         if (eventLoopGroup != null) {
             eventLoopGroup.shutdownGracefully();
         }
     }
-
-
 
     @Override
     public void reconnect() {
@@ -95,7 +81,7 @@ public class NettyClient extends AbstractNettyClient {
 
     @Override
     public void connect() {
-        
+
     }
 
     @Override
