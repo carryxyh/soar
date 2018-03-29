@@ -26,4 +26,7 @@
 **ServiceContainer**：服务容器（考虑支持spring和注解扫描两种方式实现）<br/>
 
 ### soar注册中心树形结构
-![soar 注册中心树形结构](./soar-zk-data.png)
+![soar 注册中心树形结构](./soar-zk-data.png)<br/>
+
+#### soar注册中心树形结构
+![多机房和集群容错](./多机房和集群容错.png)

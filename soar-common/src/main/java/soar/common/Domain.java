@@ -1,4 +1,4 @@
-package soar.core;
+package soar.common;
 
 /**
  * Domain

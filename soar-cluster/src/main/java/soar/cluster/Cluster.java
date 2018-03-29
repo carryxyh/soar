@@ -1,6 +1,7 @@
 package soar.cluster;
 
-import soar.core.Invoker;
+
+import soar.common.Invoker;
 
 /**
  * Cluster

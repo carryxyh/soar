@@ -1,6 +1,6 @@
 package soar.core.cluster;
 
-import soar.core.Invoker;
+import soar.common.Invoker;
 
 /**
  * AbstractClusterInovker

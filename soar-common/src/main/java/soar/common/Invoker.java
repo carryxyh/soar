@@ -1,6 +1,4 @@
-package soar.core;
-
-import soar.common.SoarException;
+package soar.common;
 
 /**
  * Invoker
