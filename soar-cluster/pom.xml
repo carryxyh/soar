@@ -16,7 +16,7 @@
 
         <dependency>
             <groupId>shiwuliang.com</groupId>
-            <artifactId>soar-core</artifactId>
+            <artifactId>soar-common</artifactId>
             <version>${soar.common.version}</version>
         </dependency>
 

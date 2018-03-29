@@ -11,12 +11,13 @@ import java.util.concurrent.Executor;
 public interface ThreadPool {
 
     /**
-     * get a thread pool for server works
+     * get a pool pool for server works
      *
      * @param coreSize   core size
      * @param maxThreads max threads
-     * @param enhanced   use enhanced thread pool if true , otherwise use fixed thread pool
+     * @param queues     queues capacity
+     * @param enhanced   use enhanced pool pool if true , otherwise use fixed pool pool
      * @return the executor
      */
-    Executor getExecutor(Integer coreSize, Integer maxThreads, Boolean enhanced);
+    Executor getExecutor(Integer coreSize, Integer maxThreads, Integer queues, Boolean enhanced);
 }

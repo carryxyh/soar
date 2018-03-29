@@ -1,5 +1,7 @@
 package soar.netty;
 
+import soar.common.SoarConstants;
+
 /**
  * AbstractConfig
  *
@@ -8,19 +10,15 @@ package soar.netty;
  */
 public abstract class AbstractConfig {
 
-    private static final String DEFAULT_ROOM = "SOAR_DEFAULT_ROOM";
-
-    private static final String DEFAULT_TAG = "SOAR_DEFAULT_TAG";
-
     /**
      * machine room info
      */
-    private String room = System.getProperty("soar.room", DEFAULT_ROOM);
+    private String room = System.getProperty("soar.room", SoarConstants.DEFAULT_ROOM);
 
     /**
      * tag . for soft separate
      */
-    private String tag = System.getProperty("soar.tag", DEFAULT_TAG);
+    private String tag = System.getProperty("soar.tag", SoarConstants.DEFAULT_TAG);
 
     public String getRoom() {
         return room;

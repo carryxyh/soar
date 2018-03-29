@@ -37,8 +37,8 @@ public final class ServerConfig extends AbstractConfig {
 
 
     /**
-     * use enhanced thread pool
-     * if false use fixed thread pool
+     * use enhanced pool pool
+     * if false use fixed pool pool
      */
     private Boolean useEnhancedPool = true;
 

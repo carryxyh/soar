@@ -1,4 +1,4 @@
-package soar.cluster.instance;
+package soar.core.cluster;
 
 import soar.core.Invoker;
 

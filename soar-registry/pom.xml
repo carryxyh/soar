@@ -13,5 +13,11 @@
     <version>${soar.common.version}</version>
     <name>soar-registry</name>
 
-
+    <dependencies>
+        <dependency>
+            <groupId>shiwuliang.com</groupId>
+            <artifactId>soar-common</artifactId>
+            <version>${soar.common.version}</version>
+        </dependency>
+    </dependencies>
 </project>
