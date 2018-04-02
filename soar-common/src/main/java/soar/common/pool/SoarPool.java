@@ -11,12 +11,13 @@ import java.util.concurrent.*;
  * @author xiuyuhang [xiuyuhang]
  * @since 2018-03-29
  */
-public class SoarPool implements ThreadPool {
+public final class SoarPool implements ThreadPool {
 
     @Override
     public Executor getExecutor(Integer coreSize, Integer maxThreads, Integer queues, Boolean enhanced) {
         if (enhanced) {
             //enhanced thread pool
+            return null;
         } else {
             return new ThreadPoolExecutor(coreSize, coreSize, 0, TimeUnit.MILLISECONDS,
                     queues == 0 ? new SynchronousQueue<Runnable>() :
@@ -24,7 +25,5 @@ public class SoarPool implements ThreadPool {
                                     : new LinkedBlockingQueue<Runnable>(queues)),
                     new NamedThreadFactory(SoarConstants.SOAR_THREAD_FACTORY_NAME, true));
         }
-
-        return null;
     }
 }

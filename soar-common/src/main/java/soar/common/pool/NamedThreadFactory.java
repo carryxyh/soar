@@ -24,15 +24,30 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 public class NamedThreadFactory implements ThreadFactory {
 
+    /**
+     * seq
+     */
     private static final AtomicInteger POOL_SEQ = new AtomicInteger(1);
 
-    private final AtomicInteger mThreadNum = new AtomicInteger(1);
+    /**
+     * thread nums
+     */
+    private final AtomicInteger threadNums = new AtomicInteger(1);
 
-    private final String mPrefix;
+    /**
+     * prefix
+     */
+    private final String prefix;
 
-    private final boolean mDaemon;
+    /**
+     * is daemon thread
+     */
+    private final boolean daemon;
 
-    private final ThreadGroup mGroup;
+    /**
+     * thread group
+     */
+    private final ThreadGroup group;
 
     public NamedThreadFactory() {
         this("pool-" + POOL_SEQ.getAndIncrement(), false);
@@ -43,20 +58,21 @@ public class NamedThreadFactory implements ThreadFactory {
     }
 
     public NamedThreadFactory(String prefix, boolean daemon) {
-        mPrefix = prefix + "-thread-";
-        mDaemon = daemon;
+        this.prefix = prefix + "-thread-";
+        this.daemon = daemon;
         SecurityManager s = System.getSecurityManager();
-        mGroup = (s == null) ? Thread.currentThread().getThreadGroup() : s.getThreadGroup();
+        group = (s == null) ? Thread.currentThread().getThreadGroup() : s.getThreadGroup();
     }
 
+    @Override
     public Thread newThread(Runnable runnable) {
-        String name = mPrefix + mThreadNum.getAndIncrement();
-        Thread ret = new Thread(mGroup, runnable, name, 0);
-        ret.setDaemon(mDaemon);
+        String name = prefix + threadNums.getAndIncrement();
+        Thread ret = new Thread(group, runnable, name, 0);
+        ret.setDaemon(daemon);
         return ret;
     }
 
     public ThreadGroup getThreadGroup() {
-        return mGroup;
+        return group;
     }
 }
