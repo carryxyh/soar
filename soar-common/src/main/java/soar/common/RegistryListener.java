@@ -1,4 +1,4 @@
-package soar.registry;
+package soar.common;
 
 /**
  * RegistryListener

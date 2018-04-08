@@ -1,5 +1,7 @@
 package soar.registry;
 
+import soar.common.RegistryListener;
+
 /**
  * Registry
  *
