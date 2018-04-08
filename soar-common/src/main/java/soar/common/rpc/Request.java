@@ -1,4 +1,4 @@
-package soar.common;
+package soar.common.rpc;
 
 import java.io.Serializable;
 

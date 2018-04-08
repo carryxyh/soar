@@ -6,7 +6,7 @@ import org.apache.curator.retry.RetryNTimes;
 import org.apache.log4j.Logger;
 import org.apache.zookeeper.CreateMode;
 import soar.registry.Registry;
-import soar.common.RegistryListener;
+import soar.common.registry.RegistryListener;
 
 /**
  * CuratorRegistry

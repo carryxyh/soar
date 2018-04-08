@@ -1,9 +1,9 @@
 package soar.core.rpc;
 
 import soar.common.Invoker;
-import soar.common.Request;
-import soar.common.Response;
-import soar.common.SoarResponse;
+import soar.common.rpc.Request;
+import soar.common.rpc.Response;
+import soar.common.rpc.SoarResponse;
 import soar.common.exception.SoarException;
 import soar.common.exception.SoarExceptionCode;
 import soar.common.utils.NetUtils;

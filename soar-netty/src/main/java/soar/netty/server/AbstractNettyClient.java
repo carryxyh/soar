@@ -1,6 +1,6 @@
 package soar.netty.server;
 
-import soar.common.Client;
+import soar.common.netty.Client;
 import soar.netty.ClientConfig;
 
 import java.util.concurrent.locks.Lock;

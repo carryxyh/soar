@@ -2,6 +2,8 @@ package soar.core.cluster;
 
 import soar.common.*;
 import soar.common.exception.SoarException;
+import soar.common.rpc.Request;
+import soar.common.rpc.Response;
 import soar.core.rpc.AbstractInvoker;
 
 import java.util.Map;

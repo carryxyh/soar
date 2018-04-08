@@ -1,6 +1,6 @@
 package soar.registry;
 
-import soar.common.RegistryListener;
+import soar.common.registry.RegistryListener;
 
 /**
  * Registry

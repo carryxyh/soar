@@ -1,6 +1,8 @@
 package soar.common;
 
 import soar.common.exception.SoarException;
+import soar.common.rpc.Request;
+import soar.common.rpc.Response;
 
 /**
  * Invoker

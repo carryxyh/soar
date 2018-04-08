@@ -2,7 +2,7 @@ package soar.cluster;
 
 import soar.common.Domain;
 import soar.common.Invoker;
-import soar.common.Request;
+import soar.common.rpc.Request;
 
 import java.util.List;
 
