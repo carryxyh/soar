@@ -1,5 +1,7 @@
 package soar.common;
 
+import soar.common.exception.SoarException;
+
 /**
  * Invoker
  * the provider service for consumer
@@ -16,4 +18,11 @@ public interface Invoker<T> extends Domain {
      * @return response
      */
     Response invoke(Request request) throws SoarException;
+
+    /**
+     * get service interface.
+     *
+     * @return service interface.
+     */
+    Class<T> getInterface();
 }

@@ -7,7 +7,9 @@ package soar.common;
  * @author xiuyuhang [xiuyuhang]
  * @since 2018-03-29
  */
-public class InvokerData {
+public final class InvokerData extends SerializableObj {
+
+    private static final long serialVersionUID = -4623888574784520442L;
 
     /**
      * host

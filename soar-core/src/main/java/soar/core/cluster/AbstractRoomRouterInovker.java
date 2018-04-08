@@ -1,6 +1,10 @@
 package soar.core.cluster;
 
-import soar.common.Invoker;
+import soar.common.*;
+import soar.common.exception.SoarException;
+import soar.core.rpc.AbstractInvoker;
+
+import java.util.Map;
 
 /**
  * AbstractRoomRouterInovker
@@ -10,5 +14,24 @@ import soar.common.Invoker;
  * @author xiuyuhang [xiuyuhang]
  * @since 2018-03-29
  */
-public abstract class AbstractRoomRouterInovker<T> implements Invoker<T> {
+public abstract class AbstractRoomRouterInovker<T> extends AbstractInvoker<T> {
+
+    /**
+     * select machine room
+     */
+    private RoomSelector roomSelector;
+
+    /**
+     * instance of cluster invoker
+     */
+    private Map<String, Invoker<T>> invokers;
+
+    protected AbstractRoomRouterInovker(Class<T> type) {
+        super(type);
+    }
+
+    @Override
+    public Response invoke(Request request) throws SoarException {
+        return null;
+    }
 }

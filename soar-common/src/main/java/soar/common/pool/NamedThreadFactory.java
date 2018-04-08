@@ -16,6 +16,8 @@
  */
 package soar.common.pool;
 
+import soar.common.SoarConstants;
+
 import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -50,7 +52,7 @@ public class NamedThreadFactory implements ThreadFactory {
     private final ThreadGroup group;
 
     public NamedThreadFactory() {
-        this("pool-" + POOL_SEQ.getAndIncrement(), false);
+        this(SoarConstants.SOAR_THREAD_FACTORY_NAME + POOL_SEQ.getAndIncrement(), false);
     }
 
     public NamedThreadFactory(String prefix) {
