@@ -39,7 +39,7 @@ public abstract class AbstractInvoker<T> implements Invoker<T> {
 
     @Override
     public Response invoke(Request request) throws SoarException {
-        if (destroyed.get()) {
+        if (isDestroyed()) {
             throw new SoarException(SoarExceptionCode.INVOKER_DESTROYED.getCode(), String.format(SoarExceptionCode.INVOKER_DESTROYED.getDesc(), type, NetUtils.getLocalHost()));
         }
         try {
