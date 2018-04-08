@@ -14,5 +14,5 @@ public interface RoomSelector {
      * @param <T> T
      * @return the room router result
      */
-    <T> Invoker<T> roomRouter(String method);
+    <T> Invoker<T> roomRouter();
 }
