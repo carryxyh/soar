@@ -7,8 +7,15 @@ import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.util.concurrent.DefaultThreadFactory;
-import soar.common.netty.Server;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import soar.common.utils.NetUtils;
 import soar.netty.ServerConfig;
+
+import java.net.InetSocketAddress;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * NettyServer
@@ -16,7 +23,9 @@ import soar.netty.ServerConfig;
  * @author xiuyuhang [xiuyuhang]
  * @since 2018-03-14
  */
-public class NettyServer implements Server {
+public class NettyServer extends AbstractNettyServer {
+
+    private static final Logger logger = LoggerFactory.getLogger(NetUtils.class);
 
     /**
      * server bootstrap
@@ -27,6 +36,11 @@ public class NettyServer implements Server {
      * netty channel
      */
     private Channel channel;
+
+    /**
+     * remoting channels key{ip:port} value:{channel}
+     */
+    private Map<String, Channel> channels;
 
     /**
      * boss loop group
@@ -47,6 +61,7 @@ public class NettyServer implements Server {
         this.serverConfig = serverConfig;
     }
 
+    @Override
     public void doOpen() {
 
         //TODO init executor
@@ -73,23 +88,44 @@ public class NettyServer implements Server {
         channel = channelFuture.channel();
     }
 
+    @Override
     public void doClose() {
+        try {
+            //close channel
+            if (channel != null) {
+                channel.close();
+            }
 
+            //close channel which connect to client
+            Set<Channel> remoteChannel = allConnectedChannel();
+            for (Channel c : remoteChannel) {
+                c.close();
+            }
+
+            //close server
+            if (serverBootstrap != null) {
+                bossGroup.shutdownGracefully();
+                workerGroup.shutdownGracefully();
+            }
+
+            //clear channels
+            if (channels != null) {
+                channels.clear();
+            }
+        } catch (Exception e) {
+            logger.warn("server close error!", e);
+        }
     }
 
-    @Override
-    public void open() {
-
-    }
-
-    @Override
-    public void close() {
-        if (channel != null) {
-            channel.close();
+    private Set<Channel> allConnectedChannel() {
+        Set<Channel> chs = new HashSet<Channel>();
+        for (Channel channel : this.channels.values()) {
+            if (channel.isActive()) {
+                chs.add(channel);
+            } else {
+                channels.remove(NetUtils.toAddressString((InetSocketAddress) channel.remoteAddress()));
+            }
         }
-        if (serverBootstrap != null) {
-            bossGroup.shutdownGracefully();
-            workerGroup.shutdownGracefully();
-        }
+        return chs;
     }
 }

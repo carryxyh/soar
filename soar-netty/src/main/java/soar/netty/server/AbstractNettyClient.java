@@ -1,6 +1,7 @@
 package soar.netty.server;
 
 import soar.common.netty.Client;
+import soar.netty.AbstractServer;
 import soar.netty.ClientConfig;
 
 import java.net.InetSocketAddress;
@@ -13,17 +14,12 @@ import java.util.concurrent.locks.ReentrantLock;
  * @author xiuyuhang [xiuyuhang]
  * @since 2018-03-26
  */
-public abstract class AbstractNettyClient implements Client {
+public abstract class AbstractNettyClient extends AbstractServer implements Client {
 
     /**
      * connect lock
      */
     protected final Lock connectLock = new ReentrantLock();
-
-    /**
-     * closed
-     */
-    protected volatile boolean closed;
 
     protected final ClientConfig clientConfig;
 
@@ -38,6 +34,10 @@ public abstract class AbstractNettyClient implements Client {
 
     @Override
     public void close() {
+        if (closed) {
+            return;
+        }
+        super.close();
         doClose();
     }
 
@@ -52,6 +52,21 @@ public abstract class AbstractNettyClient implements Client {
     public abstract void doClose();
 
     public abstract void doConnect();
+
+    public abstract void doDisConnect();
+
+    @Override
+    public void disconnect() {
+        connectLock.lock();
+        try {
+            if (!isConnect()) {
+                return;
+            }
+            doDisConnect();
+        } finally {
+            connectLock.unlock();
+        }
+    }
 
     @Override
     public void connect() {

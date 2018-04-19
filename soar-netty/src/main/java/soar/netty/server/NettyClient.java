@@ -46,11 +46,11 @@ public class NettyClient extends AbstractNettyClient {
                 .option(ChannelOption.ALLOCATOR, PooledByteBufAllocator.DEFAULT)
                 .option(ChannelOption.CONNECT_TIMEOUT_MILLIS, clientConfig.getTimeout())
                 .channel(NioSocketChannel.class);
-//        if (config.getTimeout() < 3000) {
-//            bootstrap.option(ChannelOption.CONNECT_TIMEOUT_MILLIS, 3000);
-//        } else {
-
-//        }
+        if (clientConfig.getTimeout() < 3000) {
+            bootstrap.option(ChannelOption.CONNECT_TIMEOUT_MILLIS, clientConfig.getTimeout());
+        } else {
+            bootstrap.option(ChannelOption.CONNECT_TIMEOUT_MILLIS, 3000);
+        }
 
         bootstrap.handler(new ChannelInitializer() {
 
@@ -62,9 +62,6 @@ public class NettyClient extends AbstractNettyClient {
     }
 
     public void doClose() {
-        if (closed) {
-            return;
-        }
         if (eventLoopGroup != null) {
             eventLoopGroup.shutdownGracefully();
         }
@@ -91,8 +88,11 @@ public class NettyClient extends AbstractNettyClient {
     }
 
     @Override
-    public void disconnect() {
-
+    public void doDisConnect() {
+        Channel channel = this.channel;
+        if (channel != null) {
+            channel.close();
+        }
     }
 
     @Override
