@@ -1,11 +1,13 @@
 package soar.core.rpc;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import soar.common.Invoker;
+import soar.common.exception.SoarException;
+import soar.common.exception.SoarExceptionCode;
 import soar.common.rpc.Request;
 import soar.common.rpc.Response;
 import soar.common.rpc.SoarResponse;
-import soar.common.exception.SoarException;
-import soar.common.exception.SoarExceptionCode;
 import soar.common.utils.NetUtils;
 
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -17,6 +19,8 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * @since 2018-04-08
  */
 public abstract class AbstractInvoker<T> implements Invoker<T> {
+
+    protected final Logger logger = LoggerFactory.getLogger(getClass());
 
     /**
      * the interface
@@ -61,7 +65,7 @@ public abstract class AbstractInvoker<T> implements Invoker<T> {
         return available;
     }
 
-    protected void setAvailable(boolean available) {
+    public void setAvailable(boolean available) {
         this.available = available;
     }
 
