@@ -11,11 +11,6 @@ package soar.netty;
 public final class ServerConfig extends AbstractConfig {
 
     /**
-     * port
-     */
-    private Integer port = 9988;
-
-    /**
      * server boss threads
      */
     private Integer bossThreads = 2;
@@ -49,14 +44,6 @@ public final class ServerConfig extends AbstractConfig {
         ServerConfig config = new ServerConfig();
         config.setPort(port);
         return config;
-    }
-
-    public Integer getPort() {
-        return port;
-    }
-
-    public void setPort(Integer port) {
-        this.port = port;
     }
 
     public Integer getBossThreads() {

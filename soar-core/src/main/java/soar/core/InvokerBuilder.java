@@ -1,5 +1,6 @@
 package soar.core;
 
+import org.apache.commons.collections.CollectionUtils;
 import soar.common.Invoker;
 import soar.common.InvokerData;
 
@@ -23,6 +24,9 @@ public final class InvokerBuilder<T> {
      * , RoomRouterInvoker if {@code datas} is from different rooms
      */
     public Invoker<T> build(List<InvokerData> datas) {
+        if (CollectionUtils.isEmpty(datas)) {
+            throw new IllegalArgumentException();
+        }
         return null;
     }
 }

@@ -2,13 +2,14 @@ package soar.netty.server;
 
 import io.netty.bootstrap.Bootstrap;
 import io.netty.buffer.PooledByteBufAllocator;
-import io.netty.channel.Channel;
-import io.netty.channel.ChannelInitializer;
-import io.netty.channel.ChannelOption;
-import io.netty.channel.EventLoopGroup;
+import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioSocketChannel;
+import soar.common.exception.SoarException;
+import soar.common.exception.SoarExceptionCode;
 import soar.netty.ClientConfig;
+
+import java.util.concurrent.TimeUnit;
 
 /**
  * NettyClient
@@ -70,17 +71,27 @@ public class NettyClient extends AbstractNettyClient {
     }
 
     @Override
-    public void reconnect() {
+    public void doConnect() {
+        ChannelFuture future = bootstrap.connect(getConnectAddress());
+        boolean ret = future.awaitUninterruptibly(3000, TimeUnit.MILLISECONDS);
+        if (ret && future.isSuccess()) {
+            Channel newChannel = future.channel();
 
+            Channel oldChannel = this.channel; // copy reference
+            if (oldChannel != null) {
+                oldChannel.close();
+            }
+
+            this.channel = newChannel;
+        } else if (future.cause() != null) {
+            throw new SoarException(SoarExceptionCode.CONNECT_REMOTE_SERVER_FAIL.getCode(), future.cause().getMessage(), future.cause());
+        } else {
+            throw new SoarException(SoarExceptionCode.CONNECT_REMOTE_SERVER_FAIL.getCode(), SoarExceptionCode.CONNECT_REMOTE_SERVER_FAIL.getDesc());
+        }
     }
 
     @Override
     public void disconnect() {
-
-    }
-
-    @Override
-    public void connect() {
 
     }
 

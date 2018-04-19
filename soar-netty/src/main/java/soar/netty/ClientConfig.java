@@ -13,6 +13,20 @@ public final class ClientConfig extends AbstractConfig {
      */
     private Integer timeout = 3000;
 
+    private String serverHost;
+
+    public ClientConfig(String serverHost) {
+        this.serverHost = serverHost;
+    }
+
+    public String getServerHost() {
+        return serverHost;
+    }
+
+    public void setServerHost(String serverHost) {
+        this.serverHost = serverHost;
+    }
+
     public Integer getTimeout() {
         return timeout;
     }
