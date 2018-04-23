@@ -13,4 +13,8 @@ public final class SoarConstants {
     public static final String DEFAULT_ROOM = "SOAR_LOCAL";
 
     public static final String SOAR_THREAD_FACTORY_NAME = "soar-thread-factory";
+
+    public static final int DEFAULT_RETRY_TIMES = 2;
+
+    public static final int DEFAULT_TIMEOUT = 3000;
 }
