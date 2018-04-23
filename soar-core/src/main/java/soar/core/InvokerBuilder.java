@@ -13,7 +13,7 @@ import java.util.Map;
 /**
  * InvokerBuilder
  * 1.build a invoker with invoker data
- * TODO remove this function into Aggregator
+ * TODO remove this function
  *
  * @author xiuyuhang [xiuyuhang]
  * @since 2018-03-14
