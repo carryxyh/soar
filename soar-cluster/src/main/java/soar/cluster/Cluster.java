@@ -5,6 +5,7 @@ import soar.common.Invoker;
 
 /**
  * Cluster
+ * TODO Cluster strategy when build invoker
  *
  * @author 修宇航 [xiuyuhang]
  * @since 2018-03-14

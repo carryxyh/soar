@@ -29,7 +29,7 @@ public final class InvokerData extends SerializableObj {
     /**
      * room
      */
-    private String room = "";
+    private String room = SoarConstants.DEFAULT_ROOM;
 
     /**
      * tag

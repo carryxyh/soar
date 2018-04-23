@@ -25,5 +25,11 @@
             <artifactId>soar-netty</artifactId>
             <version>${soar.common.version}</version>
         </dependency>
+
+        <dependency>
+            <groupId>shiwuliang.com</groupId>
+            <artifactId>soar-cluster</artifactId>
+            <version>${soar.common.version}</version>
+        </dependency>
     </dependencies>
 </project>
