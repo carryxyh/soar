@@ -11,12 +11,14 @@ public enum SoarExceptionCode {
     /**
      * invoke a destroyed invoker
      */
-    INVOKER_DESTROYED(101, "invoker for service %s on consumer %s has destroyed"),
+    INVOKER_DESTROYED(101, "invoker for service %s on consumer %s has destroyed!"),
 
     /**
      * connect remote server error
      */
-    CONNECT_REMOTE_SERVER_FAIL(102, "connect remote server fail");
+    CONNECT_REMOTE_SERVER_FAIL(102, "connect remote server fail!"),
+
+    CREATE_PROXY_FAIL(103, "create proxy fail!"),;
 
     /**
      * error code

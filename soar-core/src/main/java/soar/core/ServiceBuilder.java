@@ -29,6 +29,11 @@ public class ServiceBuilder<T> {
     private String room = SoarConstants.DEFAULT_ROOM;
 
     /**
+     * cacher
+     */
+    private Cacher cacher = null;
+
+    /**
      * ASYNC for default
      */
     private SyncType syncType = SyncType.ASYNC;
@@ -94,6 +99,11 @@ public class ServiceBuilder<T> {
             throw new NullPointerException();
         }
         this.loadBalanceStrategy = loadBalanceStrategy;
+        return this;
+    }
+
+    public ServiceBuilder<T> setCacher(Cacher cacher) {
+        this.cacher = cacher;
         return this;
     }
 
