@@ -24,7 +24,7 @@ public class ServiceBuilder<T> {
     private String tag = SoarConstants.DEFAULT_TAG;
 
     /**
-     * default machine room
+     * default client machine room
      */
     private String room = SoarConstants.DEFAULT_ROOM;
 

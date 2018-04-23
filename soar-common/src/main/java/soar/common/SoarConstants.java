@@ -10,7 +10,10 @@ public final class SoarConstants {
 
     public static final String DEFAULT_TAG = "SOAR_DEFAULT_TAG";
 
-    public static final String DEFAULT_ROOM = "SOAR_LOCAL";
+    /**
+     * default all the provider is in local
+     */
+    public static final String DEFAULT_ROOM = "LOCAL";
 
     public static final String SOAR_THREAD_FACTORY_NAME = "soar-thread-factory";
 
