@@ -10,6 +10,14 @@ import java.util.List;
  * ServiceBuilder
  * service builder for client
  * create a proxy with byte buddy
+ * <p>
+ * <p>
+ * - - - - - - -        - - - - - - - -       - - - - - - - -
+ * |            |  		|               |     |               |
+ * | room-router|  ——>  |cluster-invoker|  -> | soar-invoker  |
+ * |            |  		|               |     |               |
+ * - - - - - -  	     - - - - - - - -       - - - - - - - -
+ * <p>
  *
  * @author xiuyuhang [xiuyuhang]
  * @since 2018-04-23
