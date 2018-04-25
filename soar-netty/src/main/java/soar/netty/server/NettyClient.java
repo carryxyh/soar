@@ -3,8 +3,7 @@ package soar.netty.server;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.buffer.PooledByteBufAllocator;
 import io.netty.channel.*;
-import io.netty.channel.nio.NioEventLoopGroup;
-import io.netty.channel.socket.nio.NioSocketChannel;
+import io.netty.util.concurrent.DefaultThreadFactory;
 import soar.common.exception.SoarException;
 import soar.common.exception.SoarExceptionCode;
 import soar.netty.ClientConfig;
@@ -37,7 +36,7 @@ public class NettyClient extends AbstractNettyClient {
 
     public void doOpen() {
 
-        eventLoopGroup = new NioEventLoopGroup(Runtime.getRuntime().availableProcessors());
+        eventLoopGroup = initEventLoopGroup(Runtime.getRuntime().availableProcessors(), new DefaultThreadFactory("soar-client", true));
 
         bootstrap = new Bootstrap();
         bootstrap.group(eventLoopGroup)
@@ -45,7 +44,7 @@ public class NettyClient extends AbstractNettyClient {
                 .option(ChannelOption.TCP_NODELAY, Boolean.TRUE)
                 .option(ChannelOption.ALLOCATOR, PooledByteBufAllocator.DEFAULT)
                 .option(ChannelOption.CONNECT_TIMEOUT_MILLIS, clientConfig.getTimeout())
-                .channel(NioSocketChannel.class);
+                .channelFactory(initChannelFactory());
         if (clientConfig.getTimeout() < 3000) {
             bootstrap.option(ChannelOption.CONNECT_TIMEOUT_MILLIS, clientConfig.getTimeout());
         } else {

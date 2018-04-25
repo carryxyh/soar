@@ -67,11 +67,10 @@ public class NettyServer extends AbstractNettyServer {
         //TODO init executor
 
         serverBootstrap = new ServerBootstrap();
-        bossGroup = new NioEventLoopGroup(serverConfig.getBossThreads(), new DefaultThreadFactory("soar-server-boss", true));
-        workerGroup = new NioEventLoopGroup(serverConfig.getWorkerThreads(),
-                new DefaultThreadFactory("soar-server-worker", true));
+        bossGroup = initEventLoopGroup(serverConfig.getBossThreads(), new DefaultThreadFactory("soar-server-boss", true));
+        workerGroup = initEventLoopGroup(serverConfig.getWorkerThreads(), new DefaultThreadFactory("soar-server-worker", true));
         serverBootstrap.group(bossGroup, workerGroup)
-                .channel(NioServerSocketChannel.class)
+                .channelFactory(initServerChannelFactory())
                 .childOption(ChannelOption.TCP_NODELAY, Boolean.TRUE)
                 .childOption(ChannelOption.SO_REUSEADDR, Boolean.TRUE)
                 .childOption(ChannelOption.ALLOCATOR, PooledByteBufAllocator.DEFAULT)

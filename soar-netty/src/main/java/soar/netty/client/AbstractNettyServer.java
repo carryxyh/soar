@@ -1,7 +1,20 @@
 package soar.netty.client;
 
+import io.netty.channel.ChannelFactory;
+import io.netty.channel.EventLoopGroup;
+import io.netty.channel.ServerChannel;
+import io.netty.channel.epoll.EpollEventLoopGroup;
+import io.netty.channel.epoll.EpollServerSocketChannel;
+import io.netty.channel.kqueue.KQueueEventLoopGroup;
+import io.netty.channel.kqueue.KQueueServerSocketChannel;
+import io.netty.channel.nio.NioEventLoopGroup;
+import io.netty.channel.socket.nio.NioServerSocketChannel;
 import soar.common.netty.Server;
 import soar.netty.AbstractServer;
+import soar.netty.NativeSupport;
+import soar.netty.SocketType;
+
+import java.util.concurrent.ThreadFactory;
 
 /**
  * AbstractNettyServer
@@ -28,4 +41,18 @@ public abstract class AbstractNettyServer extends AbstractServer implements Serv
     protected abstract void doClose();
 
     protected abstract void doOpen();
+
+    protected ChannelFactory<? extends ServerChannel> initServerChannelFactory() {
+        SocketType socketType = socketType();
+        switch (socketType) {
+            case NATIVE_EPOLL:
+                return (ChannelFactory<EpollServerSocketChannel>) EpollServerSocketChannel::new;
+            case NATIVE_KQUEUE:
+                return (ChannelFactory<KQueueServerSocketChannel>) KQueueServerSocketChannel::new;
+            case JAVA_NIO:
+                return (ChannelFactory<NioServerSocketChannel>) NioServerSocketChannel::new;
+            default:
+                throw new IllegalStateException("Invalid socket type: " + socketType);
+        }
+    }
 }
