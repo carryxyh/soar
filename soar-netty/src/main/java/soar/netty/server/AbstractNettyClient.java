@@ -1,15 +1,9 @@
 package soar.netty.server;
 
 import io.netty.channel.ChannelFactory;
-import io.netty.channel.EventLoopGroup;
-import io.netty.channel.epoll.EpollEventLoopGroup;
 import io.netty.channel.epoll.EpollSocketChannel;
-import io.netty.channel.kqueue.KQueueEventLoopGroup;
-import io.netty.channel.kqueue.KQueueServerSocketChannel;
 import io.netty.channel.kqueue.KQueueSocketChannel;
-import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
-import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import soar.common.netty.Client;
 import soar.netty.AbstractServer;
@@ -17,7 +11,6 @@ import soar.netty.ClientConfig;
 import soar.netty.SocketType;
 
 import java.net.InetSocketAddress;
-import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -98,26 +91,11 @@ public abstract class AbstractNettyClient extends AbstractServer implements Clie
         SocketType socketType = socketType();
         switch (socketType) {
             case NATIVE_EPOLL:
-                return new ChannelFactory<EpollSocketChannel>() {
-                    @Override
-                    public EpollSocketChannel newChannel() {
-                        return new EpollSocketChannel();
-                    }
-                };
+                return (ChannelFactory<EpollSocketChannel>) EpollSocketChannel::new;
             case NATIVE_KQUEUE:
-                return new ChannelFactory<KQueueSocketChannel>() {
-                    @Override
-                    public KQueueSocketChannel newChannel() {
-                        return new KQueueSocketChannel();
-                    }
-                };
+                return (ChannelFactory<KQueueSocketChannel>) KQueueSocketChannel::new;
             case JAVA_NIO:
-                return new ChannelFactory<NioSocketChannel>() {
-                    @Override
-                    public NioSocketChannel newChannel() {
-                        return new NioSocketChannel();
-                    }
-                };
+                return (ChannelFactory<NioSocketChannel>) NioSocketChannel::new;
             default:
                 throw new IllegalStateException("Invalid socket type: " + socketType);
         }
