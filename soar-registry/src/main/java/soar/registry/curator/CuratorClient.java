@@ -7,7 +7,6 @@ import org.apache.log4j.Logger;
 import org.apache.zookeeper.CreateMode;
 import org.apache.zookeeper.KeeperException;
 import soar.registry.AbstractZkClient;
-import soar.registry.ChildListener;
 import soar.registry.StateListener;
 
 import java.util.List;
@@ -45,50 +44,58 @@ public class CuratorClient extends AbstractZkClient {
 
     @Override
     protected void doClose() {
-
+        client.close();
     }
 
     @Override
-    public void create(String path, boolean ephemeral) {
-        if (ephemeral) {
-            try {
-                client.create().withMode(CreateMode.EPHEMERAL).forPath(path);
-            } catch (Exception e) {
-                throw new IllegalStateException(e.getMessage(), e);
-            }
-        } else {
-            try {
-                client.create().forPath(path);
-            } catch (KeeperException.NodeExistsException e) {
-            } catch (Exception e) {
-                throw new IllegalStateException(e.getMessage(), e);
-            }
+    protected void createPersistent(String path) {
+        try {
+            client.create().forPath(path);
+        } catch (KeeperException.NodeExistsException e) {
+        } catch (Exception e) {
+            throw new IllegalStateException(e.getMessage(), e);
         }
     }
 
     @Override
-    public void delete(String path) {
+    protected void createEphemeral(String path) {
+        try {
+            client.create().withMode(CreateMode.EPHEMERAL).forPath(path);
+        } catch (Exception e) {
+            throw new IllegalStateException(e.getMessage(), e);
+        }
+    }
 
+    @Override
+    protected boolean checkExists(String path) {
+        try {
+            if (client.checkExists().forPath(path) != null) {
+                return true;
+            }
+        } catch (Exception e) {
+        }
+        return false;
+    }
+
+    @Override
+    public void delete(String path) {
+        try {
+            client.delete().forPath(path);
+        } catch (KeeperException.NoNodeException e) {
+        } catch (Exception e) {
+            throw new IllegalStateException(e.getMessage(), e);
+        }
     }
 
     @Override
     public List<String> getChildren(String path) {
-        return null;
-    }
-
-    @Override
-    public List<String> addChildListener(String path, ChildListener listener) {
-        return null;
-    }
-
-    @Override
-    public void removeChildListener(String path, ChildListener listener) {
-
-    }
-
-    @Override
-    public void addStateListener(StateListener listener) {
-
+        try {
+            return client.getChildren().forPath(path);
+        } catch (KeeperException.NoNodeException e) {
+            return null;
+        } catch (Exception e) {
+            throw new IllegalStateException(e.getMessage(), e);
+        }
     }
 
     @Override
