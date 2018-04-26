@@ -82,12 +82,10 @@ public class LongSequence extends LongRhsPadding {
 
         public long next() {
             long realVal = ++localValue + localBase;
-
             if (localValue == step) {
                 localBase = getNextBaseValue();
                 localValue = 0;
             }
-
             return realVal;
         }
     }
