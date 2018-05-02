@@ -1,4 +1,4 @@
-package soar.netty.server;
+package soar.netty.client;
 
 import io.netty.bootstrap.Bootstrap;
 import io.netty.buffer.PooledByteBufAllocator;

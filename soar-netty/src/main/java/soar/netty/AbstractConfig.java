@@ -21,7 +21,7 @@ public abstract class AbstractConfig {
     private String room = System.getProperty("soar.room", SoarConstants.DEFAULT_ROOM);
 
     /**
-     * tag . for soft separate
+     * tag for soft separate
      */
     private String tag = System.getProperty("soar.tag", SoarConstants.DEFAULT_TAG);
 

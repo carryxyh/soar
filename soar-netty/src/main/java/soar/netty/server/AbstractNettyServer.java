@@ -1,4 +1,4 @@
-package soar.netty.client;
+package soar.netty.server;
 
 import io.netty.channel.ChannelFactory;
 import io.netty.channel.ServerChannel;
