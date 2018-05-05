@@ -1,6 +1,7 @@
 package soar.core;
 
 import soar.cluster.ClusterStrategy;
+import soar.cluster.ClusterStrategyConfig;
 import soar.cluster.LoadBalanceStrategy;
 import soar.common.SoarConstants;
 
@@ -47,6 +48,18 @@ public class ServiceBuilder<T> {
     private SyncType syncType = SyncType.ASYNC;
 
     /**
+     * service version
+     */
+    private String version = SoarConstants.DEFAULT_VERSION;
+
+    /**
+     * consumer filter list
+     */
+    private List<ConsumerFilter> consumerFilters;
+
+    /*-----------------------------------sth about cluster invoke-------------------------------------------*/
+
+    /**
      * round robin for default laodbalance strategy
      */
     private LoadBalanceStrategy loadBalanceStrategy = LoadBalanceStrategy.ROUND_ROBIN;
@@ -55,11 +68,6 @@ public class ServiceBuilder<T> {
      * fail over for default cluster strategy
      */
     private ClusterStrategy clusterStrategy = ClusterStrategy.FAIL_OVER;
-
-    /**
-     * consumer filter list
-     */
-    private List<ConsumerFilter> consumerFilters;
 
     /**
      * retry times
@@ -142,6 +150,22 @@ public class ServiceBuilder<T> {
     }
 
     public T build() {
-        return null;
+        ClusterStrategyConfig clusterStrategyConfig = new ClusterStrategyConfig(clusterStrategy, loadBalanceStrategy, timeout, retries);
+        Object methodHandler = null;
+        switch (syncType) {
+            case SYNC:
+
+                break;
+            case ASYNC:
+
+                break;
+            default:
+                throw reject("unsupport synctype : " + syncType);
+        }
+        return Proxies.getDefault().newProxy(service, methodHandler);
+    }
+
+    private static UnsupportedOperationException reject(String message) {
+        return new UnsupportedOperationException(message);
     }
 }

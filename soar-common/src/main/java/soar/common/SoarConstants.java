@@ -19,5 +19,7 @@ public final class SoarConstants {
 
     public static final int DEFAULT_RETRY_TIMES = 2;
 
+    public static final String DEFAULT_VERSION = "1.0.0";
+
     public static final int DEFAULT_TIMEOUT = 3000;
 }

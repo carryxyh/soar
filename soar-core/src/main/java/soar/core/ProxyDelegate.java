@@ -6,7 +6,7 @@ package soar.core;
  * @author xiuyuhang [xiuyuhang]
  * @since 2018-04-23
  */
-public interface ProxyDelegate<T> {
+public interface ProxyDelegate {
 
     /**
      * create a new proxy with handler
@@ -15,5 +15,5 @@ public interface ProxyDelegate<T> {
      * @param handler handler
      * @return proxy
      */
-    T newProxy(Class<T> inter, Object handler);
+    <T> T newProxy(Class<T> inter, Object handler);
 }
