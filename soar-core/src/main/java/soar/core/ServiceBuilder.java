@@ -1,11 +1,15 @@
 package soar.core;
 
+import com.google.common.collect.Maps;
+import org.apache.commons.collections.CollectionUtils;
 import soar.cluster.ClusterStrategy;
 import soar.cluster.ClusterStrategyConfig;
 import soar.cluster.LoadBalanceStrategy;
 import soar.common.SoarConstants;
 
+import java.lang.reflect.Method;
 import java.util.List;
+import java.util.Map;
 
 /**
  * ServiceBuilder
@@ -152,6 +156,20 @@ public class ServiceBuilder<T> {
     public T build() {
         ClusterStrategyConfig clusterStrategyConfig = new ClusterStrategyConfig(clusterStrategy, loadBalanceStrategy, timeout, retries);
         Object methodHandler = null;
+
+        Method[] methods = service.getDeclaredMethods();
+        if (methods == null || methods.length == 0) {
+            //do not have method inter
+            return Proxies.getDefault().newProxy(service, methodHandler);
+        }
+        Map<String, MethodConfig> methodConfigMap = Maps.newHashMap();
+        for (Method m : methods) {
+            MethodConfig mc = m.getAnnotation(MethodConfig.class);
+            if (mc != null) {
+                methodConfigMap.put(m.getName(), mc);
+            }
+        }
+
         switch (syncType) {
             case SYNC:
 

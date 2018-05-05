@@ -13,10 +13,10 @@ import soar.common.exception.SoarExceptionCode;
  * @author xiuyuhang [xiuyuhang]
  * @since 2018-04-23
  */
-public class ByteBuddyProxyDelegate<T> implements ProxyDelegate<T> {
+public class ByteBuddyProxyDelegate implements ProxyDelegate {
 
     @Override
-    public T newProxy(Class<T> inter, Object handler) {
+    public <T> T newProxy(Class<T> inter, Object handler) {
         Class<? extends T> cls = new ByteBuddy()
                 .subclass(inter)
                 .method(ElementMatchers.isDeclaredBy(inter))
