@@ -9,11 +9,7 @@ import soar.common.rpc.Response;
  * @author xiuyuhang [xiuyuhang]
  * @since 2018-04-23
  */
-public class SoarInvoker<T> extends AbstractInvoker<T> {
-
-    protected SoarInvoker(Class<T> type) {
-        super(type);
-    }
+public class SoarInvoker extends AbstractInvoker {
 
     @Override
     protected Response doInvoke(Request request) throws Throwable {

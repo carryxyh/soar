@@ -18,7 +18,7 @@ import java.util.Map;
  * @author xiuyuhang [xiuyuhang]
  * @since 2018-03-14
  */
-public final class InvokerBuilder<T> {
+public final class InvokerBuilder {
 
     /**
      * build a invoker with given data
@@ -28,7 +28,7 @@ public final class InvokerBuilder<T> {
      * , ClusterInvoker if {@code datas} is all from the same room
      * , RoomRouterInvoker if {@code datas} is from different rooms
      */
-    public Invoker<T> build(List<InvokerData> datas) {
+    public Invoker build(List<InvokerData> datas) {
         if (CollectionUtils.isEmpty(datas)) {
             throw new IllegalArgumentException();
         }
@@ -68,7 +68,7 @@ public final class InvokerBuilder<T> {
      * @param invokerData invoker data
      * @return SoarInvoker
      */
-    private Invoker<T> buildSoarInvoker(InvokerData invokerData) {
+    private Invoker buildSoarInvoker(InvokerData invokerData) {
         return null;
     }
 }

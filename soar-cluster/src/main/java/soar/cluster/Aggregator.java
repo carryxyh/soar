@@ -14,7 +14,7 @@ import java.util.List;
  * @author 修宇航 [xiuyuhang]
  * @since 2018-03-26
  */
-public interface Aggregator<T> extends Domain {
+public interface Aggregator extends Domain {
 
     /**
      * part of invokers to use
@@ -22,5 +22,5 @@ public interface Aggregator<T> extends Domain {
      * @param request request
      * @return part of invokers
      */
-    List<Invoker<T>> part(Request request);
+    List<Invoker> part(Request request);
 }

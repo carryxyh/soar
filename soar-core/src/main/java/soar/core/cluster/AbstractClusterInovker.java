@@ -8,9 +8,6 @@ import soar.core.rpc.AbstractInvoker;
  * @author xiuyuhang [xiuyuhang]
  * @since 2018-03-16
  */
-public abstract class AbstractClusterInovker<T> extends AbstractInvoker {
+public abstract class AbstractClusterInovker extends AbstractInvoker {
 
-    protected AbstractClusterInovker(Class type) {
-        super(type);
-    }
 }

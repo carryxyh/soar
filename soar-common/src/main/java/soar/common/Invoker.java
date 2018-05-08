@@ -11,7 +11,7 @@ import soar.common.rpc.Response;
  * @author xiuyuhang [xiuyuhang]
  * @since 2018-03-14
  */
-public interface Invoker<T> extends Domain {
+public interface Invoker extends Domain {
 
     /**
      * invoke a remote request
@@ -20,11 +20,4 @@ public interface Invoker<T> extends Domain {
      * @return response
      */
     Response invoke(Request request) throws SoarException;
-
-    /**
-     * get service interface.
-     *
-     * @return service interface.
-     */
-    Class<T> getInterface();
 }

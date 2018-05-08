@@ -16,8 +16,7 @@ public interface Cluster {
      * construct a cluster invoker
      *
      * @param aggregator the aggregator
-     * @param <T>        service
      * @return the cluster invoker
      */
-    <T> Invoker<T> construct(Aggregator<T> aggregator);
+    Invoker construct(Aggregator aggregator);
 }

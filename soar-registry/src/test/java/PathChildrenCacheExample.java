@@ -32,11 +32,20 @@ public class PathChildrenCacheExample {
 
     public static void main(String[] args) throws Exception {
         CuratorFramework client = getClient();
+
+        client.getConnectionStateListenable().addListener(new ConnectionStateListener() {
+
+            @Override
+            public void stateChanged(CuratorFramework client, ConnectionState newState) {
+                System.out.println("Zookeeper connection state changed " + newState);
+            }
+        });
+
 //        String parentPath = "/soar";
         String path = "/soar/service1";
+        String pathChild = "/soar/service1/127.0.0.1";
 
-        PathChildrenCache pathChildrenCache = new PathChildrenCache(client, path, true);
-        pathChildrenCache.start(PathChildrenCache.StartMode.POST_INITIALIZED_EVENT);
+        PathChildrenCache pathChildrenCache = new PathChildrenCache(client, path, false);
 
         //guaranteed保证节点被删除
 //        client.delete().guaranteed().forPath(parentPath);
@@ -46,22 +55,22 @@ public class PathChildrenCacheExample {
 //        }
 
         if (client.checkExists().forPath(path) == null) {
-            client.create().creatingParentsIfNeeded().withMode(CreateMode.EPHEMERAL).forPath(path);
+            client.create().creatingParentsIfNeeded().forPath(path);
             client.setData().forPath(path, "test".getBytes("utf-8"));
         }
 
         Thread.sleep(1000);
 
-        System.out.println(client.getChildren().usingWatcher(new CuratorWatcher() {
-
-            @Override
-            public void process(WatchedEvent event) throws Exception {
-                System.out.println(event.getPath());
-                System.out.println(event.getType());
-                System.out.println(event.getState());
-            }
-            //这里 /soar是父节点，service1是子节点.
-        }).forPath("/soar"));
+//        System.out.println(client.getChildren().usingWatcher(new CuratorWatcher() {
+//
+//            @Override
+//            public void process(WatchedEvent event) throws Exception {
+//                System.out.println(event.getPath());
+//                System.out.println(event.getType());
+//                System.out.println(event.getState());
+//            }
+//            //这里 /soar是父节点，service1是子节点.
+//        }).forPath("/soar"));
 
 
 //        Thread.sleep(1000);
@@ -72,7 +81,7 @@ public class PathChildrenCacheExample {
 //        client.delete().forPath(path);
         //节点设置数据同样会触发监听器
 //        client.setData().forPath(path, "test data".getBytes("utf-8"));
-        Thread.sleep(2000);
+//        Thread.sleep(2000);
 
         pathChildrenCache.getListenable().addListener(new PathChildrenCacheListener() {
             @Override
@@ -81,6 +90,14 @@ public class PathChildrenCacheExample {
                 System.out.println(new String(event.getData().getData()));
             }
         });
+
+        pathChildrenCache.start();
+
+//        if (client.checkExists().forPath(pathChild) == null) {
+//            client.create().creatingParentsIfNeeded().forPath(pathChild);
+//        } else {
+//            client.delete().guaranteed().forPath(pathChild);
+//        }
 
         Thread.sleep(5000);
     }
